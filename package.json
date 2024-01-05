@@ -1,0 +1,23 @@
+{
+  "name": "auth-node",
+  "version": "1.0.0",
+  "description": "Authentication with nodeJs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "Authentication",
+    "with",
+    "NodeJs"
+  ],
+  "author": "Lalit Kumar (JERRY)",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "nodemon": "^3.0.2"
+  }
+}
