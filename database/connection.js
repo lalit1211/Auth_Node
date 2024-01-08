@@ -9,7 +9,7 @@ const db = function (DATABASE) {
 
 // ?         event-listener if successfully connected with db        
 mongoose.connection.on("connected", () =>
-	console.log("----->> Connected to MongoDB"),
+	___("--> Connected to MongoDB"),
 );
 
 // ?        event listener when error comes while connecting         

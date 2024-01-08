@@ -1,8 +1,11 @@
 const User = require('../database/schemas/user.Schema')
 const catchAsync = require('../utility/catchAsync')
 const _Error = require('../utility/_Error')
+const bcrypt = require('bcrypt')
+const {signAccessToken} = require('../utility/jwt_helper')
+const JWT = require('jsonwebtoken')
 
-
+// ?                       User Register Module                   
 const signUp =catchAsync( async function (req, res, next) {
 	const { name, email, password, confirmPassword } =
 		req.body;
@@ -13,7 +16,7 @@ const signUp =catchAsync( async function (req, res, next) {
 	if (password !== confirmPassword) {
 		return next(new _Error("Password does not matched", 400))
 	}
-	if(User.findOne(email)){
+	if(await User.findOne({email})){
 		return next(new _Error("user already registered", 400))
 	}
 	
@@ -24,40 +27,62 @@ const signUp =catchAsync( async function (req, res, next) {
 		password,
 	});
 
+	const accessToken = await signAccessToken(user._id)
+
+
 		res.status(200).json({
-			status: "success",
-			user: user,
+			user:{id: user._id,
+			name: user.name,
+			email: user.email,},
+			token: accessToken,
 		});
 })
 
+
+
+
+// ?                  User SignIn Module                              
 const signIn = catchAsync(async function(req, res, next){
 	const {email, password} = req.body;
 
 	if(!email || !password){
 		return next(
-			new _Error("Please provide email and password"),
-			400
+			new _Error("Please provide email and password", 422)
 		)
 	}
-	const user = await User.findOne({email})
+	const user = await User.findOne({email}).select('+password')
 	if(!user){
 		return next(
 			new _Error("Invalid email or password", 401)
 		)
 	}
 
-	if(user.password !== password){
-		return next(
-			new _Error("Invalid email or password", 401)
-		)
+	const isMatched = await bcrypt.compare(password, user.password)
+	if(!isMatched){
+		return next(new _Error("Invalid email/password", 422))
 	}
 
+	const accessToken = await signAccessToken(user._id);
+
 	res.status(200).json({
-		name : user.name,
-		email : user.email,
-		id : user._id
-	})
+		user: {
+			id: user._id,
+			name: user.name,
+			email: user.email,
+		},
+		token: accessToken,
+	});
 })
+
+
+
+
+
+
+
+
+
+
 module.exports ={
 	signUp,
 	signIn

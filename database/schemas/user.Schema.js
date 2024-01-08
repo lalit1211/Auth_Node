@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
 
 const userSchema = mongoose.Schema(
@@ -17,6 +18,7 @@ const userSchema = mongoose.Schema(
 		},
 		email: {
 			type: String,
+			lowercase: true,
 			required: [
 				true,
 				"E-mail is mandatory to provide",
@@ -34,14 +36,29 @@ const userSchema = mongoose.Schema(
 				50,
 				"Password should not exceed more than 50 characters",
 			],
+			select : false
 		},
 		confirmPassword: {
 			type: String,
-			// required : [true]
+			minlength: [
+				4,
+				"Password should have at least 4 characters",
+			],
+			maxlength: [
+				50,
+				"Password should not exceed more than 50 characters",
+			],
 		},
 	},
 	{ timestamps: true },
 );
+
+
+userSchema.pre('save', async function(next){
+	const hashedPassword = await bcrypt.hash(this.password, 10);
+	this.password = hashedPassword;
+	// this.confirmPassword = '';
+})
 
 const User = mongoose.model("users", userSchema)
 

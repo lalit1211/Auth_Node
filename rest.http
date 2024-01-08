@@ -1,0 +1,20 @@
+### Signup
+POST http://localhost:8000/api/v1/user/signUp
+Content-Type: application/json
+
+{
+    "name": "jerry",
+    "email": "jerrydsdffyyy@gmail.com",
+    "password" : "12345",
+    "confirmPassword" : "12345"
+}
+
+###Login Route
+POST http://localhost:8000/api/v1/user/signIn
+Content-Type: application/json
+
+{
+    "email": "jerrydsdffy@gmail.com",
+    "password" : "12345"
+
+}
