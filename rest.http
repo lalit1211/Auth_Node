@@ -9,12 +9,28 @@ Content-Type: application/json
     "confirmPassword" : "12345"
 }
 
+
 ###Login Route
 POST http://localhost:8000/api/v1/user/signIn
 Content-Type: application/json
 
 {
-    "email": "jerrydsdffy@gmail.com",
-    "password" : "12345"
+    "email": "jerrydsdffyyy@gmail.com",
+    "password" : "12345" 
 
 }
+
+
+
+#### Refresh Token
+POST http://localhost:8000/api/v1/user/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1SUQiOiI2NTljZTkwMjM0MDI4YTIxYTM3YzU2ZGQiLCJpYXQiOjE3MDQ4OTgzMzEsImV4cCI6MTc2ODAxMzUzMSwiaXNzIjoiTGFsaXQgS3VtYXIgKEpFUlJZKSJ9.NdGMsZdTVgenenp88YO4_L0w1geuGHtM9eZgCGbM8YE"
+}
+
+
+##### test
+POST http://localhost:8000/api/v1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1SUQiOiI2NTljZTkwMjM0MDI4YTIxYTM3YzU2ZGQiLCJpYXQiOjE3MDQ4OTg2NTUsImV4cCI6MTcwNDkwNTg1NX0.7Q1xnJEZ6UZXiRK6MakdDF0aHPaxIhRaE72NR_jMvpE

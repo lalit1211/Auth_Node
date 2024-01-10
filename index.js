@@ -1,6 +1,6 @@
 const color = require('colors')
 global.___ = (_)=>{
-    console.log(color.rainbow(_))
+    console.log(color.blue(_))
 }
 global.err = (_)=>{
     console.log(color.red(_))
