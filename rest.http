@@ -4,11 +4,10 @@ Content-Type: application/json
 
 {
     "name": "jerry",
-    "email": "jerrydsdffyyy@gmail.com",
+    "email": "jerry@gmail.com",
     "password" : "12345",
     "confirmPassword" : "12345"
 }
-
 
 ###Login Route
 POST http://localhost:8000/api/v1/user/signIn
@@ -17,8 +16,30 @@ Content-Type: application/json
 {
     "email": "jerrydsdffyyy@gmail.com",
     "password" : "12345" 
-
 }
+
+###Forget passwrod
+GET  http://localhost:8000/api/v1/user/forget-password
+Content-Type: application/json
+
+{
+    "email": "jerry@gmail.com"
+}
+
+###Forget passwrod
+PUT http://localhost:8000/api/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "email": "jerry@gmail.com",
+    "OTP": 219873,
+    "password": "1234",
+    "confirmPassword" : "1234"
+}
+
+
+
+
 
 
 
