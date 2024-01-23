@@ -2,6 +2,7 @@ const User = require('../database/schemas/user.Schema')
 const catchAsync = require('../utility/catchAsync')
 const _Error = require('../utility/_Error')
 const bcrypt = require('bcrypt')
+const mail = require('../utility/mail')
 const {removeOtp} = require('../utility/otp_remover')
 const {signAccessToken, signRefreshToken, verifyRefreshToken} = require('../utility/jwt_helper')
 
@@ -96,10 +97,15 @@ const forgotPassword = catchAsync(async (req, res, next)=>{
 
 	//. It will generate OTP and remove it from database after 60-sec
 	await user.generateOTP()
+	mail({
+		email:user.email,
+		OTP: user.OTP
+	})
 	setTimeout(async()=>{
 		await User.findByIdAndUpdate(user._id, {OTP: ''}, {new: true} )
 	}, 60000)
 
+console.log(user.OTP)
 	res.status(200).json({
 		status : "success",
 		user: user

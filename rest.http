@@ -35,7 +35,7 @@ Content-Type: application/json
     "email": "jerry@gmail.com"
 }
 
-###Forget passwrod
+###Reset passwrod
 PUT http://localhost:8000/api/v1/user/reset-password
 Content-Type: application/json
 
