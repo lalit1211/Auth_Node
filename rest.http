@@ -9,12 +9,21 @@ Content-Type: application/json
     "confirmPassword" : "12345"
 }
 
+###delete user
+DELETE   http://localhost:8000/api/v1/user/remove
+Content-Type: application/json
+
+{
+    "email": "jerry@gmail.com",
+    "password": "12345"
+}
+
 ###Login Route
 POST http://localhost:8000/api/v1/user/signIn
 Content-Type: application/json
 
 {
-    "email": "jerrydsdffyyy@gmail.com",
+    "email": "jerry@gmail.com",
     "password" : "12345" 
 }
 

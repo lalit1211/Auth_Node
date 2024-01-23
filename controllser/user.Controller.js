@@ -135,11 +135,24 @@ const resetPassword = catchAsync(async (req, res, next)=>{
 })
 
 
+//?                   User delete module                       
+const deleteUser = catchAsync(async (req, res, next)=>{
+	const {email, password} = req.body
+	if(!email || !password)return next(new _Error("Incomplete details", 422))
+	
+	const user = await User.findOne({email}).select("+password")
+// console.log(user)
+	if(!user)return next(new _Error("Invalid email/password", 401))
+	const verifyPassword = await bcrypt.compare(password, user.password)
+	if(!verifyPassword)return next(new _Error("invalid email/password", 401))
+	const dl = await User.deleteOne({email})
 
-
-
-
-
+	res.status(200).json({
+		status: "success",
+		message: `user with email: ${user.email} deleted successfully`,
+		userId: user._id
+	})
+})
 
 
 
@@ -176,6 +189,7 @@ module.exports ={
 	signIn,
 	resetPassword,
 	forgotPassword,
+	deleteUser,
 	refreshToken,
 	test
 }
